@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气查询</title>
+    <link rel="stylesheet" href="../css/weather.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+   
+</head>
+ 
+<body>
+    <h1>城市：遵义</h1>
+ 
+    <ul>
+        <li>
+            <h2>今天</h2>
+            <span id="today">今天是：</span>
+            <span id="lunar">农历：</span>
+            <div class="condition_1">天气：</div>
+            <div class="wind_1">风：</div>
+            <div class="temp_1">温度：</div>
+            <div class="pm25_1">pm2.5：</div>
+            <div class="pollution_1">空气质量：</div>
+            <img id="img" src="">
+        </li>
+ 
+        <li>
+            <h2>明天</h2>
+            <span id="tomorrow">明天是：</span>
+            <div class="condition_2">天气：</div>
+            <div class="wind_2">风：</div>
+            <div class="temp_2">温度：</div>
+            <div class="pm25_2">pm2.5：</div>
+            <div class="pollution_2">空气质量：</div>
+            <img id="img2" src="">
+        </li>
+ 
+        <li>
+            <h2>后天</h2>
+            <span id="thirdday">后天是：</span>
+            <div class="condition_3">天气：</div>
+            <div class="wind_3">风：</div>
+            <div class="temp_3">温度：</div>
+            <div class="pm25_3">pm2.5：未知</div>
+            <div class="pollution_3">空气质量：</div>
+            <img id="img3" src="">
+        
+        </li>
+ 
+        <li>
+            <h2>第四天</h2>
+            <span id="fourthday">第四天是：</span>
+            <div class="condition_4">天气：</div>
+            <div class="wind_4">风：</div>
+            <div class="temp_4">温度：</div>
+            <div class="pm25_4">pm2.5：未知</div>
+            <div class="pollution_4">空气质量：未知</div>
+            <img id="img4" src="">
+        </li>
+ 
+        <li>
+            <h2>第五天</h2>
+            <span id="fifthday">第五天是：</span>
+            <div class="condition_5">天气：</div>
+            <div class="wind_5">风：</div>
+            <div class="temp_5">温度：</div>
+            <div class="pm25_5">pm2.5：未知</div>
+            <div class="pollution_5">空气质量：未知</div>
+            <img id="img5" src="">
+        </li>
+        
+    </ul>
+    
+    <script>
+        var jsonHandler = function(weatherInfo)
+        {
+            var data = weatherInfo.data.weather.content;
+ 
+            document.querySelector('#today').innerText += data.today.time;
+            document.querySelector('#tomorrow').innerText += data.tomorrow.time;
+            document.querySelector('#thirdday').innerText += data.thirdday.time;
+            document.querySelector('#fourthday').innerText += data.fourthday.time;
+            document.querySelector('#fifthday').innerText += data.fifthday.time;
+            document.querySelector('#lunar').innerText += data.calendar.lunar;
+ 
+            var condition_1 = document.querySelector(".condition_1");condition_1.innerText += data.today.condition;
+            var condition_2 = document.querySelector(".condition_2");condition_2.innerHTML += data.tomorrow.condition;
+            var condition_3 = document.querySelector(".condition_3");condition_3.innerHTML += data.thirdday.condition;
+            var condition_4 = document.querySelector(".condition_4");condition_4.innerHTML += data.fourthday.condition;
+            var condition_5 = document.querySelector(".condition_5");condition_5.innerHTML += data.fifthday.condition;
+ 
+ 
+            var wind_1 = document.querySelector(".wind_1");wind_1.innerHTML += data.today.wind;
+            var wind_2 = document.querySelector(".wind_2");wind_2.innerHTML += data.tomorrow.wind;
+            var wind_3 = document.querySelector(".wind_3");wind_3.innerHTML += data.thirdday.wind;
+            var wind_4 = document.querySelector(".wind_4");wind_4.innerHTML += data.fourthday.wind;
+            var wind_5 = document.querySelector(".wind_5");wind_5.innerHTML += data.fifthday.wind;
+ 
+            var temp_1 = document.querySelector(".temp_1");temp_1.innerHTML += data.today.temp;
+            var temp_2 = document.querySelector(".temp_2");temp_2.innerHTML += data.tomorrow.temp;
+            var temp_3 = document.querySelector(".temp_3");temp_3.innerHTML += data.thirdday.temp;
+            var temp_4 = document.querySelector(".temp_4");temp_4.innerHTML += data.fourthday.temp;
+            var temp_5 = document.querySelector(".temp_5");temp_5.innerHTML += data.fifthday.temp;
+ 
+            var pollution_1 = document.querySelector(".pollution_1"); pollution_1.innerHTML += data.today.pollution;
+            var pollution_2 = document.querySelector(".pollution_2"); pollution_2.innerHTML += data.tomorrow.pollution;
+            var pollution_3 = document.querySelector(".pollution_3"); pollution_3.innerHTML += data.thirdday.pollution;
+ 
+            var pm25_1 = document.querySelector(".pm25_1");pm25_1.innerHTML+= data.today.pm25;
+            var pm25_2 = document.querySelector(".pm25_2");pm25_2.innerHTML+= data.tomorrow.pm25;
+ 
+            var a1 =data.today.imgs[1];document.querySelector('#img').src = "../img/weather_icon/"+a1+".jpg";
+            var a2 =data.tomorrow.imgs[1];document.querySelector('#img2').src = "../img/weather_icon/"+a2+".jpg";
+            var a3 =data.thirdday.imgs[1];document.querySelector('#img3').src = "../img/weather_icon/"+a3+".jpg";
+            var a4 =data.fourthday.imgs[1];document.querySelector('#img4').src = "../img/weather_icon/"+a4+".jpg";
+            var a5 =data.fifthday.imgs[1];document.querySelector('#img5').src = "../img/weather_icon/"+a5+".jpg";
+ 
+            
+        }
+        var jsonData = document.createElement("script");
+        jsonData.src = "https://www.baidu.com/home/other/data/weatherInfo?city="+encodeURI("遵义")+"&&callback=jsonHandler"
+        document.querySelector("head").appendChild(jsonData)
+     </script> 
+</body>
+   
+</html>
